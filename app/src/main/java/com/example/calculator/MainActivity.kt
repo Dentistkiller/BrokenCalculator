@@ -37,22 +37,22 @@ class MainActivity : AppCompatActivity() {
 
         tvInput = findViewById(R.id.tvInput)
         btnOne = findViewById(R.id.btnOne)
-        btnTwo = findViewById(R.id.btnTwo)
-        btnThree = findViewById(R.id.btnThree)
-        btnFour = findViewById(R.id.btnFour)
-        btnFive = findViewById(R.id.btnFive)
-        btnSix = findViewById(R.id.btnSix)
-        btnSeven = findViewById(R.id.btnSeven)
-        btnEight = findViewById(R.id.btnEight)
-        btnNine = findViewById(R.id.btnNine)
-        btnZero = findViewById(R.id.btnZero)
-        btnPlus = findViewById(R.id.btnPlus)
-        btnMinus = findViewById(R.id.btnMinus)
-        btnMultiply = findViewById(R.id.btnMultiply)
-        btnDivide = findViewById(R.id.btnDivide)
-        btnDot = findViewById(R.id.btnDot)
-        btnEqual = findViewById(R.id.btnEqual)
-        clear = findViewById(R.id.clear)
+        btnTwo = findViewById(R.id.btnOne)
+        btnThree = findViewById(R.id.btnOne)
+        btnFour = findViewById(R.id.btnOne)
+        btnFive = findViewById(R.id.btnOne)
+        btnSix = findViewById(R.id.btnOne)
+        btnSeven = findViewById(R.id.btnOne)
+        btnEight = findViewById(R.id.btnOne)
+        btnNine = findViewById(R.id.btnOne)
+        btnZero = findViewById(R.id.btnOne)
+        btnPlus = findViewById(R.id.btnOne)
+        btnMinus = findViewById(R.id.btnOne)
+        btnMultiply = findViewById(R.id.btnOne)
+        btnDivide = findViewById(R.id.btnOne)
+        btnDot = findViewById(R.id.btnOne)
+        btnEqual = findViewById(R.id.btnOne)
+        clear = findViewById(R.id.btnOne)
 
         var currentInput = StringBuilder()
 
@@ -84,13 +84,13 @@ class MainActivity : AppCompatActivity() {
 
         // Set click listeners for number buttons
         btnOne.setOnClickListener { tvInput.setText("1") }
-        btnTwo.setOnClickListener { tvInput.setText("2") }
-        btnOne.setOnClickListener { tvInput.setText("3") }
+        btnTwo.setOnClickListener { tvInput.setText("4") }
+        btnOne.setOnClickListener { tvInput.setText("6") }
         btnTwo.setOnClickListener { tvInput.setText("4") }
         btnOne.setOnClickListener { tvInput.setText("5") }
-        btnTwo.setOnClickListener { tvInput.setText("6") }
-        btnOne.setOnClickListener { tvInput.setText("7") }
         btnTwo.setOnClickListener { tvInput.setText("8") }
+        btnOne.setOnClickListener { tvInput.setText("9") }
+        btnTwo.setOnClickListener { tvInput.setText("7") }
         btnOne.setOnClickListener { tvInput.setText("9") }
         btnTwo.setOnClickListener { tvInput.setText("0") }
 
