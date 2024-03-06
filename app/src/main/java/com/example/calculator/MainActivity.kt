@@ -9,7 +9,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var tvInput : TextView
+    private lateinit var tvFirstNumber: TextView
+    private lateinit var tvOperator: TextView
+    private lateinit var tvSecondNumber: TextView
+    private lateinit var tvResult: TextView
     private lateinit var btnZero : Button
     private lateinit var btnOne : Button
     private lateinit var btnTwo : Button
@@ -27,82 +30,105 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnDot : Button
     private lateinit var btnEqual : Button
     private lateinit var clear : Button
+    var currentInput = StringBuilder()
+    // Variables to hold the operands and type of calculation
+    private var operand1: Double? = null
+    private var operand2: Double? = null
+    private var pendingOperation = "="
 
-
+    private var operator: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        tvInput = findViewById(R.id.tvInput)
+        tvFirstNumber = findViewById(R.id.tvFirstNumber)
+        tvOperator = findViewById(R.id.tvOperator)
+        tvSecondNumber = findViewById(R.id.tvSecondNumber)
+        tvResult = findViewById(R.id.tvResult)
         btnOne = findViewById(R.id.btnOne)
-        btnTwo = findViewById(R.id.btnOne)
-        btnThree = findViewById(R.id.btnOne)
-        btnFour = findViewById(R.id.btnOne)
-        btnFive = findViewById(R.id.btnOne)
-        btnSix = findViewById(R.id.btnOne)
-        btnSeven = findViewById(R.id.btnOne)
-        btnEight = findViewById(R.id.btnOne)
-        btnNine = findViewById(R.id.btnOne)
-        btnZero = findViewById(R.id.btnOne)
-        btnPlus = findViewById(R.id.btnOne)
-        btnMinus = findViewById(R.id.btnOne)
-        btnMultiply = findViewById(R.id.btnOne)
-        btnDivide = findViewById(R.id.btnOne)
-        btnDot = findViewById(R.id.btnOne)
-        btnEqual = findViewById(R.id.btnOne)
-        clear = findViewById(R.id.btnOne)
+        btnTwo = findViewById(R.id.btnTwo)
+        btnThree = findViewById(R.id.btnThree)
+        btnFour = findViewById(R.id.btnFour)
+        btnFive = findViewById(R.id.btnFive)
+        btnSix = findViewById(R.id.btnSix)
+        btnSeven = findViewById(R.id.btnSeven)
+        btnEight = findViewById(R.id.btnEight)
+        btnNine = findViewById(R.id.btnNine)
+        btnZero = findViewById(R.id.btnZero)
+        btnPlus = findViewById(R.id.btnPlus)
+        btnMinus = findViewById(R.id.btnMinus)
+        btnMultiply = findViewById(R.id.btnMultiply)
+        btnDivide = findViewById(R.id.btnDivide)
+        btnDot = findViewById(R.id.btnDot)
+        btnEqual = findViewById(R.id.btnEqual)
+        clear = findViewById(R.id.clear)
 
-        var currentInput = StringBuilder()
+        setupButtons()
+        setupEqualButton()
+    }
+    private fun setupButtons() {
+        val numberButtons = listOf(
+            R.id.btnZero, R.id.btnOne, R.id.btnTwo, R.id.btnThree,
+            R.id.btnFour, R.id.btnFive, R.id.btnSix, R.id.btnSeven,
+            R.id.btnEight, R.id.btnNine
+        )
 
-        fun setOperator(operator: String) {
-            if (currentInput.isNotEmpty()) {
-                // If input is not empty, set the operator and clear the input
-                currentInput.clear()
-                // Update the display to show the current operator
+        val operationButtons = listOf(R.id.btnPlus, R.id.btnMinus, R.id.btnMultiply, R.id.btnDivide)
+
+        numberButtons.forEach { id ->
+            findViewById<Button>(id).setOnClickListener { v ->
+                var checker = tvOperator.text.toString()
+                if (checker == "") {
+                    val button = v as Button
+                    tvFirstNumber.append(button.text)
+                }
+                else{
+                    val button = v as Button
+                    tvSecondNumber.append(button.text)
+                }
             }
         }
 
-        // Function to calculate results
-        fun calculateResult() {
-            if (currentInput.isNotEmpty()) {
-                val operand2 = currentInput.toString().toDouble()
-                var result = 0.0 // Initialize the result
-                // Determine the current operator and perform the calculation
-                // Update the result
-                // Update the display with the result
-                currentInput.clear() // Clear the input for the next calculation
+        operationButtons.forEach { id ->
+            findViewById<Button>(id).setOnClickListener { v ->
+                operator = (v as Button).text.toString()
+                tvOperator.text = operator
             }
         }
 
-        // Function to clear input
-        fun clearInput() {
-            currentInput.clear()
-            // Clear the display
+        clear.setOnClickListener {
+            operand1 = null
+            //operand2 = null
+            tvFirstNumber.text = ""
+            tvSecondNumber.text = ""
+            tvOperator.text = ""
+            tvResult.text = ""
+            pendingOperation = "="
         }
+    }
 
-        // Set click listeners for number buttons
-        btnOne.setOnClickListener { tvInput.setText("1") }
-        btnTwo.setOnClickListener { tvInput.setText("4") }
-        btnOne.setOnClickListener { tvInput.setText("6") }
-        btnTwo.setOnClickListener { tvInput.setText("4") }
-        btnOne.setOnClickListener { tvInput.setText("5") }
-        btnTwo.setOnClickListener { tvInput.setText("8") }
-        btnOne.setOnClickListener { tvInput.setText("9") }
-        btnTwo.setOnClickListener { tvInput.setText("7") }
-        btnOne.setOnClickListener { tvInput.setText("9") }
-        btnTwo.setOnClickListener { tvInput.setText("0") }
+    private fun setupEqualButton() {
+        findViewById<Button>(R.id.btnEqual).setOnClickListener {
+            val firstNumber = tvFirstNumber.text.toString().toDoubleOrNull()
+            val secondNumber = tvSecondNumber.text.toString().toDoubleOrNull()
 
-// Set click listeners for operator buttons
-// Call the setOperator function with the appropriate operator as an argument
+            if (firstNumber != null && secondNumber != null && operator != null) {
+                val result = when (operator) {
+                    "+" -> firstNumber + secondNumber
+                    "-" -> firstNumber - secondNumber
+                    "*" -> firstNumber * secondNumber
+                    "/" -> if (secondNumber != 0.0) firstNumber / secondNumber else Double.NaN
+                    else -> Double.NaN
+                }
 
-// Handle equals button click
-        btnEqual.setOnClickListener { calculateResult() }
-
-// Handle clear button click
-        clear.setOnClickListener { clearInput() }
-
+                tvResult.text = result.toString()
+                // Clear the previous TextViews
+                tvFirstNumber.text = ""
+                tvOperator.text = ""
+                tvSecondNumber.text = ""
+            }
+        }
     }
 }
-
